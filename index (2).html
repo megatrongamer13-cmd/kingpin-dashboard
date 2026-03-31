@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Pin — S11D</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+  --yellow:  #FFD300;
+  --yellow2: #E6BE00;
+  --bg:      #090C11;
+  --surf:    #262B32;
+  --raised:  #2F3540;
+  --hover:   #363D47;
+  --border:  #3A4150;
+  --borderl: #4A5260;
+  --txt:     #F0F2F5;
+  --txt2:    #8A93A2;
+  --txt3:    #545E6B;
+  --ok:      #22C55E;
+  --ok-bg:   rgba(34,197,94,0.08);
+  --bad:     #EF4444;
+  --bad-bg:  rgba(239,68,68,0.08);
+  --warn:    #F59E0B;
+  --info:    #60A5FA;
+  --info-bg: rgba(96,165,250,0.08);
+  --ui: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --hdr-bg:  #0D1117;
+}
+body.light {
+  --bg:      #F2F4F7;
+  --surf:    #FFFFFF;
+  --raised:  #F0F2F5;
+  --hover:   #E8EBF0;
+  --border:  #DDE1E8;
+  --borderl: #BDC3CE;
+  --txt:     #0F1117;
+  --txt2:    #3D4452;
+  --txt3:    #7B8494;
+  --ok:      #15803D;
+  --ok-bg:   rgba(21,128,61,0.09);
+  --bad:     #B91C1C;
+  --bad-bg:  rgba(185,28,28,0.08);
+  --warn:    #92400E;
+  --info:    #1D4ED8;
+  --info-bg: rgba(29,78,216,0.07);
+  --hdr-bg:  #090C11;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ui);font-size:13px;background:var(--bg);color:var(--txt);line-height:1.5;min-height:100vh}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:200;background:var(--hdr-bg);border-bottom:2px solid var(--yellow);padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between}
+.hdr-l{display:flex;align-items:center;gap:14px}
+.logo{background:var(--yellow);color:#000;font-weight:700;font-size:12px;letter-spacing:1.5px;padding:5px 10px;border-radius:2px}
+.hdr-title{font-size:14px;font-weight:600}
+.hdr-title em{font-style:normal;color:var(--yellow)}
+.hdr-meta{font-size:11px;color:var(--txt3);text-align:right;line-height:1.7}
+.hdr-meta b{color:var(--txt2);font-weight:500}
+
+/* THEME TOGGLE */
+.tt{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;margin-left:18px}
+.tt-track{position:relative;width:46px;height:23px;background:#3A4150;border-radius:23px;border:1px solid #555;transition:background .2s}
+body.light .tt-track{background:#C8D0DB;border-color:#A8B2C0}
+.tt-thumb{position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:#FFD300;transition:transform .22s;font-size:8px;display:flex;align-items:center;justify-content:center}
+body.light .tt-thumb{transform:translateX(23px)}
+.tt-lbl{font-size:11px;font-weight:600;letter-spacing:.3px;color:#8A93A2;white-space:nowrap}
+body.light .tt-lbl{color:#7B8494}
+
+/* PAGE */
+.page{padding:18px 24px 48px}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
+.card{background:var(--surf);border:1px solid var(--border);border-top:2px solid var(--borderl);border-radius:5px;padding:12px 14px;text-align:center}
+.card-num{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1}
+.card-lbl{margin-top:5px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);line-height:1.3}
+.c-y{border-top-color:var(--yellow)}
+.c-g{border-top-color:var(--ok)}
+.c-r{border-top-color:var(--bad)}.c-r .card-num{color:var(--bad)}
+.c-b{border-top-color:var(--info)}.c-b .card-num{color:var(--info)}
+.c-o{border-top-color:var(--warn)}.c-o .card-num{color:var(--warn)}
+
+/* LEGEND */
+.lgd{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:8px 14px;background:var(--surf);border:1px solid var(--border);border-radius:5px;margin-bottom:14px;font-size:11px}
+.lgi{display:flex;align-items:center;gap:6px;color:var(--txt2)}
+.lgd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.lgd-r{margin-left:auto;font-size:10.5px;color:var(--txt3);font-family:var(--mono)}
+
+/* TOOLBAR */
+.tb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;background:var(--surf);border:1px solid var(--border);border-radius:5px;margin-bottom:12px}
+.tb-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--txt3);white-space:nowrap}
+.inp{background:var(--raised);border:1px solid var(--border);color:var(--txt);padding:6px 10px;border-radius:3px;font-size:12.5px;font-family:var(--ui);outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--yellow)}
+.inp::placeholder{color:var(--txt3)}
+select.inp{cursor:pointer}
+.tb-sep{width:1px;height:24px;background:var(--border);flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:3px;border:1px solid transparent;font-family:var(--ui);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-y{background:var(--yellow);color:#000;border-color:var(--yellow2)}
+.btn-g{background:transparent;color:var(--txt2);border-color:var(--borderl)}
+
+/* FILTER NOTE */
+.fnote{display:none;background:var(--info-bg);border:1px solid rgba(96,165,250,.2);border-radius:3px;padding:7px 12px;font-size:11.5px;color:var(--info);margin-bottom:10px}
+.fnote.show{display:block}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:10px}
+.tab{padding:7px 16px;border-radius:3px 3px 0 0;border:1px solid var(--border);border-bottom:none;background:var(--surf);color:var(--txt3);font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;user-select:none}
+.tab:hover{color:var(--txt2);background:var(--raised)}
+.tab.active{background:var(--raised);color:var(--txt);border-color:var(--borderl)}
+.tbadge{display:inline-flex;align-items:center;justify-content:center;background:var(--bad);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px;min-width:16px}
+
+/* TABLE WRAPPER */
+.tbl-wrap{background:var(--surf);border:1px solid var(--borderl);border-radius:0 5px 5px 5px;overflow:hidden}
+.tbl-bar{background:#0D1117;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.tbl-title{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--yellow)}
+.tbl-count{font-size:11px;color:var(--txt3);font-family:var(--mono)}
+.tbl-scroll{overflow-x:auto}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;min-width:960px}
+thead tr:first-child{background:#0D1117}
+thead tr:last-child{background:#131820}
+th{padding:8px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);border-bottom:1px solid var(--border);white-space:nowrap}
+th.tal{text-align:left;padding-left:14px}
+.thkp{color:#D97706;background:rgba(245,158,11,.06);border-bottom:1px solid rgba(245,158,11,.18)}
+.thae{color:#3B82F6;background:rgba(96,165,250,.06);border-bottom:1px solid rgba(96,165,250,.18)}
+.thkps{color:#B45309;background:rgba(245,158,11,.04);border-bottom:2px solid rgba(245,158,11,.12);font-size:9.5px}
+.thaes{color:#2563EB;background:rgba(96,165,250,.04);border-bottom:2px solid rgba(96,165,250,.12);font-size:9.5px}
+
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--hover)}
+tbody tr.rk{background:rgba(239,68,68,.06)}
+tbody tr.rk:hover{background:rgba(239,68,68,.1)}
+tbody tr.ra{background:rgba(96,165,250,.04)}
+tbody tr.ra:hover{background:rgba(96,165,250,.08)}
+tbody tr.rb{background:rgba(239,68,68,.08)}
+tbody tr.rb:hover{background:rgba(239,68,68,.13)}
+
+td{padding:9px 10px;text-align:center;vertical-align:middle}
+td.tal{text-align:left;padding-left:14px}
+
+/* Machine */
+.mach{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.3px}
+
+/* Days pill */
+.dp{display:inline-block;padding:2px 8px;border-radius:20px;font-family:var(--mono);font-size:11.5px;font-weight:600}
+.dp-g{background:rgba(34,197,94,.1);color:var(--ok);border:1px solid rgba(34,197,94,.2)}
+.dp-o{background:rgba(245,158,11,.1);color:var(--warn);border:1px solid rgba(245,158,11,.2)}
+.dp-r{background:rgba(239,68,68,.1);color:var(--bad);border:1px solid rgba(239,68,68,.2)}
+.dp-n{background:var(--raised);color:var(--txt3);border:1px solid var(--border)}
+
+/* Date */
+.dt{font-family:var(--mono);font-size:11.5px;color:var(--txt2)}
+
+/* Values — primary reading concern */
+.v{font-family:var(--mono);font-size:13px;font-weight:600;display:inline-block;min-width:50px;padding:3px 7px;border-radius:3px;text-align:right}
+.vok{color:var(--ok)}
+.vbad{color:var(--bad);background:rgba(239,68,68,.12);font-weight:700}
+.vwarn{color:var(--warn)}
+.vna{color:var(--txt3);font-size:11px}
+
+/* Status badge */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:3px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.bok{background:rgba(34,197,94,.1);color:var(--ok);border:1px solid rgba(34,197,94,.18)}
+.bkp{background:rgba(239,68,68,.1);color:var(--bad);border:1px solid rgba(239,68,68,.2)}
+.bae{background:rgba(96,165,250,.1);color:var(--info);border:1px solid rgba(96,165,250,.18)}
+.bboth{background:rgba(239,68,68,.12);color:#FF8080;border:1px solid rgba(239,68,68,.25)}
+.bna{background:var(--raised);color:var(--txt3);border:1px solid var(--border)}
+.bdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* Backlog toggle */
+.bl-cell{display:flex;align-items:center;justify-content:center;gap:6px}
+.bl-sw{position:relative;width:38px;height:20px;cursor:pointer;flex-shrink:0}
+.bl-sw input{opacity:0;width:0;height:0;position:absolute}
+.bl-tr{position:absolute;inset:0;background:var(--raised);border:1px solid var(--borderl);border-radius:20px;transition:all .2s}
+.bl-tr::before{content:'';position:absolute;width:14px;height:14px;left:2px;top:2px;background:var(--txt3);border-radius:50%;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.bl-sw input:checked+.bl-tr{background:rgba(239,68,68,.2);border-color:var(--bad)}
+.bl-sw input:checked+.bl-tr::before{transform:translateX(18px);background:var(--bad)}
+.bl-lbl{font-size:10px;font-weight:600;color:var(--txt3);min-width:28px}
+.bl-lbl.open{color:var(--bad)}
+
+/* Obs */
+.obs-inp{width:100%;background:var(--raised);border:1px solid transparent;color:var(--txt2);padding:4px 8px;border-radius:3px;font-size:11.5px;font-family:var(--ui);outline:none;transition:border-color .15s,color .15s}
+.obs-inp::placeholder{color:var(--txt3);font-size:11px}
+.obs-inp:focus{border-color:var(--yellow);color:var(--txt);background:#1A1F27}
+
+/* Hist btn */
+.btn-hist{background:none;border:1px solid var(--borderl);color:var(--txt3);padding:4px 10px;border-radius:3px;font-size:11px;font-family:var(--ui);cursor:pointer;transition:all .15s}
+.btn-hist:hover{border-color:var(--yellow);color:var(--yellow)}
+
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.ov.open{display:flex}
+.modal{background:var(--surf);border:1px solid var(--borderl);border-radius:8px;width:520px;max-width:96vw;box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden}
+.m-hdr{background:#0D1117;border-bottom:2px solid var(--yellow);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.m-hdr h3{font-size:14px;font-weight:600}
+.m-close{background:none;border:none;color:var(--txt3);font-size:22px;cursor:pointer;line-height:1;transition:color .15s}
+.m-close:hover{color:var(--txt)}
+.m-body{padding:20px}
+.fsec{border:1px solid var(--border);border-radius:5px;padding:12px 14px;margin-bottom:12px}
+.fsec-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.fst-b{color:var(--txt2)}.fst-k{color:var(--warn)}.fst-a{color:var(--info)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fgrid1{grid-template-columns:1fr}
+.fg label{display:block;font-size:10.5px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fg .inp{width:100%}
+.m-alert{display:none;padding:8px 12px;border-radius:3px;font-size:12px;font-weight:600;margin-top:10px}
+.m-err{background:rgba(239,68,68,.1);color:var(--bad);border:1px solid rgba(239,68,68,.25)}
+.m-warn{background:rgba(245,158,11,.1);color:var(--warn);border:1px solid rgba(245,158,11,.25)}
+.m-ftr{padding:14px 20px;background:var(--bg);border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+/* HISTORY PANEL */
+.hp{position:fixed;right:0;top:0;bottom:0;width:360px;background:var(--surf);border-left:1px solid var(--borderl);box-shadow:-12px 0 40px rgba(0,0,0,.4);z-index:300;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease}
+.hp.open{transform:translateX(0)}
+.hp-hdr{background:#0D1117;border-bottom:2px solid var(--yellow);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hp-hdr h3{font-size:13px;font-weight:600}
+.hp-close{background:none;border:none;color:var(--txt3);font-size:20px;cursor:pointer;transition:color .15s}
+.hp-close:hover{color:var(--txt)}
+.hp-body{flex:1;overflow-y:auto;padding:14px}
+.he{background:var(--raised);border:1px solid var(--border);border-radius:5px;padding:12px;margin-bottom:10px}
+.he.lat{border-color:var(--yellow)}
+.he-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--yellow);margin-bottom:4px}
+.he-date{font-family:var(--mono);font-size:11px;color:var(--txt3);margin-bottom:8px}
+.he-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.he-v{font-size:11.5px;color:var(--txt2)}
+.he-v span{font-family:var(--mono);font-weight:600}
+.he-obs{margin-top:8px;font-size:11px;color:var(--txt2);font-style:italic;border-top:1px solid var(--border);padding-top:6px}
+
+/* EMPTY */
+.empty-row td{padding:40px 20px;color:var(--txt3);text-align:center;font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="logo">SOTREQ CAT</div>
+    <div class="hdr-title">King Pin Control <em>/ S11D</em></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="hdr-meta">
+      <b>794AC — Serra Sul</b> &nbsp;|&nbsp; Ref. 31/03/2026 &nbsp;|&nbsp; Criado por <strong style="color:var(--yellow)">João Luís</strong>
+    </div>
+    <div class="tt" onclick="toggleTheme()" title="Alternar modo escuro / claro">
+      <div class="tt-track"><div class="tt-thumb" id="ttThumb">🌙</div></div>
+      <span class="tt-lbl" id="ttLbl">Escuro</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="cards" id="cardsEl"></div>
+
+  <div class="lgd">
+    <div class="lgi"><div class="lgd-dot" style="background:var(--bad)"></div> KP &gt; 1,65 mm — excedido</div>
+    <div class="lgi"><div class="lgd-dot" style="background:var(--info)"></div> AE &gt; 3,4 mm — excedido</div>
+    <div class="lgi"><div class="lgd-dot" style="background:var(--ok)"></div> Dentro do limite</div>
+    <div class="lgi"><div class="lgd-dot" style="background:var(--warn)"></div> Valor negativo — verificar</div>
+    <div class="lgd-r">KP lim. 1,65 mm &nbsp;|&nbsp; AE lim. 3,4 mm</div>
+  </div>
+
+  <div class="tb">
+    <div class="tb-lbl">Busca</div>
+    <input class="inp" id="inpSearch" placeholder="CA113…" oninput="run()" style="width:82px">
+    <div class="tb-sep"></div>
+    <div class="tb-lbl">Medição</div>
+    <select class="inp" id="inpDate" onchange="run()">
+      <option value="0">Todas</option>
+      <option value="last">Última de cada máquina</option>
+      <option value="30">Últimos 30 dias</option>
+      <option value="60">Últimos 60 dias</option>
+      <option value="90">Últimos 90 dias</option>
+    </select>
+    <div class="tb-sep"></div>
+    <div class="tb-lbl">Ordenar</div>
+    <select class="inp" id="inpSort" onchange="run()">
+      <option value="machine">Máquina</option>
+      <option value="days">Mais antigos primeiro</option>
+      <option value="kp">Maior valor KP</option>
+      <option value="ae">Maior valor AE</option>
+    </select>
+    <div class="tb-sep"></div>
+    <button class="btn btn-y" onclick="openModal()">+ Registrar Medição</button>
+    <button class="btn btn-g" onclick="clearF()">Limpar</button>
+    <button class="btn btn-g" onclick="exportCSV()" title="Salva em formato compatível com Excel">⬇ Exportar Excel</button>
+  </div>
+
+  <div class="fnote" id="fnote"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="all" onclick="setTab(this)">Todas</div>
+    <div class="tab" data-tab="kp" onclick="setTab(this)">🔴 KP Excedido <span class="tbadge" id="bkp">0</span></div>
+    <div class="tab" data-tab="ae" onclick="setTab(this)">🔵 AE Excedido <span class="tbadge" id="bae" style="background:var(--info)">0</span></div>
+    <div class="tab" data-tab="backlog" onclick="setTab(this)">📋 Backlog <span class="tbadge" id="bbl">0</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-bar">
+      <div class="tbl-title">Medições King Pin &amp; Anel Encosto — 794AC</div>
+      <div class="tbl-count" id="rowCount"></div>
+    </div>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2" class="tal">Máquina</th>
+            <th rowspan="2">Dias s/ Med.</th>
+            <th rowspan="2">Última Medição</th>
+            <th colspan="4" class="thkp">KING PIN (limite 1,65 mm)</th>
+            <th colspan="2" class="thae">ANEL ENCOSTO (limite 3,4 mm)</th>
+            <th rowspan="2">Status</th>
+            <th rowspan="2">Backlog</th>
+            <th rowspan="2">Observação</th>
+            <th rowspan="2"></th>
+          </tr>
+          <tr>
+            <th class="thkps">Dir. Inf.</th>
+            <th class="thkps">Dir. Sup.</th>
+            <th class="thkps">Esq. Inf.</th>
+            <th class="thkps">Esq. Sup.</th>
+            <th class="thaes">Dir. (LD)</th>
+            <th class="thaes">Esq. (LE)</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="ov" id="ov">
+  <div class="modal">
+    <div class="m-hdr">
+      <h3>Registrar Nova Medição</h3>
+      <button class="m-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="m-body">
+      <div class="fsec">
+        <div class="fsec-t fst-b">Identificação</div>
+        <div class="fgrid">
+          <div class="fg"><label>Máquina</label><select class="inp" id="fM"></select></div>
+          <div class="fg"><label>Data da Medição</label><input class="inp" type="date" id="fD"></div>
+        </div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-t fst-k">King Pin — limite 1,65 mm</div>
+        <div class="fgrid">
+          <div class="fg"><label>Dir. Inferior (mm)</label><input class="inp" type="number" step="0.1" id="fKpDI" placeholder="0.0"></div>
+          <div class="fg"><label>Dir. Superior (mm)</label><input class="inp" type="number" step="0.1" id="fKpDS" placeholder="0.0"></div>
+          <div class="fg"><label>Esq. Inferior (mm)</label><input class="inp" type="number" step="0.1" id="fKpEI" placeholder="0.0"></div>
+          <div class="fg"><label>Esq. Superior (mm)</label><input class="inp" type="number" step="0.1" id="fKpES" placeholder="0.0"></div>
+        </div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-t fst-a">Anel Encosto — limite 3,4 mm</div>
+        <div class="fgrid">
+          <div class="fg"><label>Direito — LD (mm)</label><input class="inp" type="number" step="0.1" id="fAeD" placeholder="0.0"></div>
+          <div class="fg"><label>Esquerdo — LE (mm)</label><input class="inp" type="number" step="0.1" id="fAeE" placeholder="0.0"></div>
+        </div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-t fst-b">Observação (opcional)</div>
+        <div class="fgrid fgrid1">
+          <div class="fg"><input class="inp" type="text" id="fObs" placeholder="Ex: Medido após troca de King Pin"></div>
+        </div>
+      </div>
+      <div class="m-alert" id="mAlt"></div>
+    </div>
+    <div class="m-ftr">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-y" onclick="saveR()">Salvar Medição</button>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY PANEL -->
+<div class="hp" id="hp">
+  <div class="hp-hdr">
+    <h3 id="hpTitle">Histórico</h3>
+    <button class="hp-close" onclick="closeHp()">×</button>
+  </div>
+  <div class="hp-body" id="hpBody"></div>
+</div>
+
+<script>
+'use strict';
+const LKP=1.65,LAE=3.4,REF=new Date('2026-03-31T12:00:00');
+const MACHINES=['CA110','CA111','CA112','CA113','CA114','CA115','CA116','CA117','CA118','CA119','CA120','CA121','CA122','CA123','CA124','CA125','CA126','CA127','CA128','CA129','CA130','CA132','CA133','CA134','CA135','CA101','CA102','CA103','CA104'];
+const BASE=[
+  {d:71, kpDI:.4,kpDS:.0,kpEI:13.1,kpES:13.2,aeD:6.0,aeE:5.2},
+  {d:110,kpDI:9.5,kpDS:.8,kpEI:1.6,kpES:.8,aeD:6.6,aeE:6.4},
+  {d:37, kpDI:.4,kpDS:.2,kpEI:.0,kpES:.2,aeD:3.5,aeE:4.8},
+  {d:61, kpDI:12.5,kpDS:.1,kpEI:.1,kpES:2.1,aeD:8.4,aeE:6.8},
+  {d:61, kpDI:5.3,kpDS:.6,kpEI:.3,kpES:.3,aeD:8.9,aeE:6.5},
+  {d:71, kpDI:-13.2,kpDS:-.1,kpEI:1.1,kpES:1.3,aeD:5.5,aeE:6.2},
+  {d:70, kpDI:.3,kpDS:-.9,kpEI:.5,kpES:.9,aeD:8.0,aeE:8.2},
+  {d:62, kpDI:.4,kpDS:.0,kpEI:1.1,kpES:.5,aeD:6.3,aeE:6.6},
+  {d:71, kpDI:.1,kpDS:.2,kpEI:.4,kpES:.1,aeD:5.9,aeE:6.7},
+  {d:51, kpDI:1.6,kpDS:.9,kpEI:2.5,kpES:13.9,aeD:5.0,aeE:9.6},
+  {d:67, kpDI:.6,kpDS:.0,kpEI:8.7,kpES:.3,aeD:6.2,aeE:4.1},
+  {d:84, kpDI:12.7,kpDS:.3,kpEI:.2,kpES:1.2,aeD:5.6,aeE:6.6},
+  {d:39, kpDI:1.4,kpDS:1.2,kpEI:1.9,kpES:1.1,aeD:6.1,aeE:5.8},
+  {d:118,kpDI:8.8,kpDS:9.8,kpEI:8.5,kpES:2.3,aeD:8.6,aeE:3.0},
+  {d:85, kpDI:-.1,kpDS:.5,kpEI:.5,kpES:1.7,aeD:5.3,aeE:8.2},
+  {d:19, kpDI:.8,kpDS:.7,kpEI:.9,kpES:.2,aeD:6.1,aeE:4.3},
+  {d:59, kpDI:1.1,kpDS:.7,kpEI:1.3,kpES:1.0,aeD:4.5,aeE:4.6},
+  {d:46, kpDI:.7,kpDS:.1,kpEI:1.7,kpES:.4,aeD:4.4,aeE:2.0},
+  {d:43, kpDI:.7,kpDS:.1,kpEI:.1,kpES:.2,aeD:5.8,aeE:7.7},
+  {d:118,kpDI:1.7,kpDS:1.0,kpEI:1.1,kpES:.7,aeD:6.9,aeE:9.1},
+  {d:63, kpDI:.6,kpDS:8.3,kpEI:.3,kpES:.5,aeD:5.0,aeE:4.9},
+  {d:69, kpDI:.4,kpDS:.8,kpEI:.2,kpES:.1,aeD:3.6,aeE:6.7},
+  {d:41, kpDI:1.0,kpDS:.4,kpEI:1.0,kpES:.7,aeD:5.7,aeE:5.3},
+  {d:87, kpDI:.7,kpDS:.9,kpEI:1.0,kpES:.7,aeD:7.6,aeE:7.0},
+  {d:60, kpDI:.1,kpDS:-.1,kpEI:.4,kpES:-.1,aeD:4.5,aeE:4.5},
+  {d:null},{d:null},{d:null},{d:null}
+];
+
+function dAgo(iso){if(!iso)return null;return Math.round((REF-new Date(iso))/86400000)}
+function dFrom(n){const d=new Date(REF);d.setDate(d.getDate()-n);return d.toISOString().slice(0,10)}
+function fmt(iso){if(!iso)return'—';const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`}
+function ld(k,df){try{return JSON.parse(localStorage.getItem(k))??df}catch{return df}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+
+let BL=ld('kp3_bl',{});
+let RS=ld('kp3_rs',null);
+if(!RS){
+  RS=BASE.map((b,i)=>{
+    if(b.d==null)return[];
+    return[{machine:MACHINES[i],date:dFrom(b.d),...b,obs:''}];
+  });
+  sv('kp3_rs',RS);
+}
+
+function latest(i){const h=(RS[i]||[]).filter(r=>r.date).sort((a,b)=>new Date(b.date)-new Date(a.date));return h[0]||null}
+function hist(i){return(RS[i]||[]).filter(r=>r.date).sort((a,b)=>new Date(b.date)-new Date(a.date))}
+function push(i,r){if(!RS[i])RS[i]=[];RS[i].unshift(r);sv('kp3_rs',RS)}
+
+function excKP(r){if(!r)return false;return[r.kpDI,r.kpDS,r.kpEI,r.kpES].some(v=>v!=null&&Math.abs(v)>LKP)}
+function excAE(r){if(!r)return false;return[r.aeD,r.aeE].some(v=>v!=null&&v>LAE)}
+
+function vkp(v){
+  if(v==null)return'<span class="v vna">—</span>';
+  if(v<0)return`<span class="v vwarn">${v.toFixed(1)}</span>`;
+  if(Math.abs(v)>LKP)return`<span class="v vbad">${v.toFixed(1)}</span>`;
+  return`<span class="v vok">${v.toFixed(1)}</span>`;
+}
+function vae(v){
+  if(v==null)return'<span class="v vna">—</span>';
+  if(v>LAE)return`<span class="v vbad">${v.toFixed(1)}</span>`;
+  return`<span class="v vok">${v.toFixed(1)}</span>`;
+}
+function pill(d){
+  if(d==null)return'<span class="dp dp-n">s/data</span>';
+  const c=d>=90?'dp-r':d>=60?'dp-o':'dp-g';
+  return`<span class="dp ${c}">${d}d</span>`;
+}
+function sbadge(r){
+  if(!r||r.kpDI==null)return'<span class="badge bna">Sem dados</span>';
+  const k=excKP(r),a=excAE(r);
+  if(k&&a)return'<span class="badge bboth"><span class="bdot" style="background:var(--bad)"></span>KP + AE Excedido</span>';
+  if(k)return'<span class="badge bkp"><span class="bdot" style="background:var(--bad)"></span>KP Excedido</span>';
+  if(a)return'<span class="badge bae"><span class="bdot" style="background:var(--info)"></span>AE Excedido</span>';
+  return'<span class="badge bok"><span class="bdot" style="background:var(--ok)"></span>OK</span>';
+}
+
+let TAB='all';
+function setTab(el){TAB=el.dataset.tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');run()}
+
+function run(){
+  const q=document.getElementById('inpSearch').value.toLowerCase().trim();
+  const dv=document.getElementById('inpDate').value;
+  const sv2=document.getElementById('inpSort').value;
+  const fn=document.getElementById('fnote');
+
+  let data=MACHINES.map((m,i)=>({m,i,r:latest(i)}));
+  if(q)data=data.filter(x=>x.m.toLowerCase().includes(q));
+
+  if(dv==='last'){
+    fn.textContent='Exibindo a última medição registrada de cada máquina.';fn.classList.add('show');
+  }else if(['30','60','90'].includes(dv)){
+    const mx=parseInt(dv);
+    const before=data.length;
+    data=data.filter(x=>x.r?.date&&dAgo(x.r.date)<=mx);
+    fn.textContent=`Medições nos últimos ${mx} dias. ${before-data.length} máquina(s) sem medição nesse período estão ocultas.`;
+    fn.classList.add('show');
+  }else{fn.classList.remove('show')}
+
+  if(TAB==='kp')data=data.filter(x=>excKP(x.r));
+  if(TAB==='ae')data=data.filter(x=>excAE(x.r));
+  if(TAB==='backlog')data=data.filter(x=>BL[x.m]?.open);
+
+  if(sv2==='days')data.sort((a,b)=>(b.r?.date?dAgo(b.r.date):-1)-(a.r?.date?dAgo(a.r.date):-1));
+  else if(sv2==='kp')data.sort((a,b)=>{
+    const mx=r=>r?Math.max(...[r.kpDI,r.kpDS,r.kpEI,r.kpES].filter(v=>v!=null).map(Math.abs),0):0;
+    return mx(b.r)-mx(a.r);
+  });
+  else if(sv2==='ae')data.sort((a,b)=>{
+    const mx=r=>r?Math.max(...[r.aeD,r.aeE].filter(v=>v!=null),0):0;
+    return mx(b.r)-mx(a.r);
+  });
+  else data.sort((a,b)=>a.m.localeCompare(b.m));
+
+  const tbody=document.getElementById('tbody');
+  document.getElementById('rowCount').textContent=`${data.length} registro${data.length!==1?'s':''}`;
+
+  if(!data.length){tbody.innerHTML='<tr class="empty-row"><td colspan="13">Nenhuma máquina com os filtros selecionados.</td></tr>';return}
+
+  tbody.innerHTML=data.map(({m,r})=>{
+    const days=r?.date?dAgo(r.date):null;
+    const bl=BL[m]||{};const open=!!bl.open;const obs=(bl.obs||'').replace(/"/g,'&quot;');
+    let rc='';
+    if(excKP(r)&&excAE(r))rc='rb';else if(excKP(r))rc='rk';else if(excAE(r))rc='ra';
+    return`<tr class="${rc}">
+      <td class="tal"><span class="mach">${m}</span></td>
+      <td>${pill(days)}</td>
+      <td><span class="dt">${fmt(r?.date)}</span></td>
+      <td>${vkp(r?.kpDI??null)}</td><td>${vkp(r?.kpDS??null)}</td>
+      <td>${vkp(r?.kpEI??null)}</td><td>${vkp(r?.kpES??null)}</td>
+      <td>${vae(r?.aeD??null)}</td><td>${vae(r?.aeE??null)}</td>
+      <td>${sbadge(r)}</td>
+      <td><div class="bl-cell">
+        <label class="bl-sw"><input type="checkbox" ${open?'checked':''} onchange="togBL('${m}',this.checked)"><span class="bl-tr"></span></label>
+        <span class="bl-lbl ${open?'open':''}">${open?'Aberto':'—'}</span>
+      </div></td>
+      <td><input class="obs-inp" type="text" value="${obs}" placeholder="Adicionar obs…" onchange="saveObs('${m}',this.value)"></td>
+      <td><button class="btn-hist" onclick="openHp('${m}')">Histórico</button></td>
+    </tr>`;
+  }).join('');
+
+  buildCards();
+}
+
+function buildCards(){
+  const all=MACHINES.map((m,i)=>({m,r:latest(i)}));
+  const wd=all.filter(x=>x.r?.kpDI!=null);
+  const ke=wd.filter(x=>excKP(x.r)).length;
+  const ae=wd.filter(x=>excAE(x.r)).length;
+  const o90=wd.filter(x=>x.r?.date&&dAgo(x.r.date)>=90).length;
+  const bl=MACHINES.filter(m=>BL[m]?.open).length;
+  document.getElementById('bkp').textContent=ke;
+  document.getElementById('bae').textContent=ae;
+  document.getElementById('bbl').textContent=bl;
+  document.getElementById('cardsEl').innerHTML=`
+    <div class="card c-y"><div class="card-num">${MACHINES.length}</div><div class="card-lbl">Total de máquinas</div></div>
+    <div class="card c-g"><div class="card-num">${wd.length}</div><div class="card-lbl">Com medição</div></div>
+    <div class="card c-r"><div class="card-num">${ke}</div><div class="card-lbl">KP excedido</div></div>
+    <div class="card c-b"><div class="card-num">${ae}</div><div class="card-lbl">AE excedido</div></div>
+    <div class="card c-o"><div class="card-num">${o90}</div><div class="card-lbl">≥ 90 dias s/medir</div></div>
+    <div class="card c-r"><div class="card-num">${bl}</div><div class="card-lbl">Backlog aberto</div></div>`;
+}
+
+function togBL(m,checked){
+  if(!BL[m])BL[m]={};BL[m].open=checked;sv('kp3_bl',BL);
+  const td=event.target.closest('td');
+  const lb=td.querySelector('.bl-lbl');
+  if(lb){lb.textContent=checked?'Aberto':'—';lb.className='bl-lbl'+(checked?' open':'')}
+  if(TAB==='backlog')run();else buildCards();
+}
+
+function saveObs(m,val){if(!BL[m])BL[m]={};BL[m].obs=val.trim();sv('kp3_bl',BL)}
+
+function openModal(){
+  const sel=document.getElementById('fM');
+  sel.innerHTML=MACHINES.map(m=>`<option>${m}</option>`).join('');
+  document.getElementById('fD').value=REF.toISOString().slice(0,10);
+  ['fKpDI','fKpDS','fKpEI','fKpES','fAeD','fAeE','fObs'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mAlt').style.display='none';
+  document.getElementById('ov').classList.add('open');
+}
+function closeModal(){document.getElementById('ov').classList.remove('open')}
+
+function saveR(){
+  const machine=document.getElementById('fM').value;
+  const date=document.getElementById('fD').value;
+  if(!date){showAlt('Informe a data da medição.','m-err');return}
+  const pf=id=>{const v=parseFloat(document.getElementById(id).value);return isNaN(v)?null:v};
+  const r={machine,date,kpDI:pf('fKpDI'),kpDS:pf('fKpDS'),kpEI:pf('fKpEI'),kpES:pf('fKpES'),aeD:pf('fAeD'),aeE:pf('fAeE'),obs:document.getElementById('fObs').value.trim()};
+  push(MACHINES.indexOf(machine),r);
+  const ws=[];
+  if(excKP(r))ws.push('KP excedido (> 1,65 mm)');
+  if(excAE(r))ws.push('AE excedido (> 3,4 mm)');
+  if(ws.length){showAlt('⚠ '+ws.join(' | '),'m-warn');setTimeout(()=>{closeModal();run()},1600)}
+  else{closeModal();run()}
+}
+
+function showAlt(msg,cls){const el=document.getElementById('mAlt');el.className='m-alert '+cls;el.style.display='block';el.textContent=msg}
+
+function openHp(m){
+  const idx=MACHINES.indexOf(m);const h=hist(idx);
+  document.getElementById('hpTitle').textContent=`Histórico — ${m}`;
+  const body=document.getElementById('hpBody');
+  if(!h.length){body.innerHTML='<p style="color:var(--txt3);font-size:12px;padding:8px">Sem histórico registrado.</p>';document.getElementById('hp').classList.add('open');return}
+  const vc=(v,l)=>v!=null&&Math.abs(v)>l?'var(--bad)':'var(--ok)';
+  body.innerHTML=h.map((r,i)=>`
+    <div class="he${i===0?' lat':''}">
+      ${i===0?'<div class="he-tag">Última medição</div>':''}
+      <div class="he-date">${fmt(r.date)} — ${dAgo(r.date)} dias atrás</div>
+      <div class="he-grid">
+        <div class="he-v">KP Dir. Inf: <span style="color:${vc(r.kpDI,LKP)}">${r.kpDI?.toFixed(1)??'—'} mm</span></div>
+        <div class="he-v">KP Dir. Sup: <span style="color:${vc(r.kpDS,LKP)}">${r.kpDS?.toFixed(1)??'—'} mm</span></div>
+        <div class="he-v">KP Esq. Inf: <span style="color:${vc(r.kpEI,LKP)}">${r.kpEI?.toFixed(1)??'—'} mm</span></div>
+        <div class="he-v">KP Esq. Sup: <span style="color:${vc(r.kpES,LKP)}">${r.kpES?.toFixed(1)??'—'} mm</span></div>
+        <div class="he-v">AE Direito: <span style="color:${vc(r.aeD,LAE)}">${r.aeD?.toFixed(1)??'—'} mm</span></div>
+        <div class="he-v">AE Esq.: <span style="color:${vc(r.aeE,LAE)}">${r.aeE?.toFixed(1)??'—'} mm</span></div>
+      </div>
+      ${r.obs?`<div class="he-obs">${r.obs}</div>`:''}
+    </div>`).join('');
+  document.getElementById('hp').classList.add('open');
+}
+function closeHp(){document.getElementById('hp').classList.remove('open')}
+
+function exportCSV(){
+  const h=['Maquina','Dias s/Medicao','Ultima Medicao','KP Dir Inf','KP Dir Sup','KP Esq Inf','KP Esq Sup','AE Dir','AE Esq','KP Excedido','AE Excedido','Backlog','Observacao'];
+  const rows=MACHINES.map((m,i)=>{
+    const r=latest(i);const d=r?.date?dAgo(r.date):'';const bl=BL[m];
+    return[m,d,r?.date?fmt(r.date):'',r?.kpDI??'',r?.kpDS??'',r?.kpEI??'',r?.kpES??'',r?.aeD??'',r?.aeE??'',excKP(r)?'SIM':'NAO',excAE(r)?'SIM':'NAO',bl?.open?'ABERTO':'',bl?.obs||''];
+  });
+  const csv=[h,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));a.download=`kingpin_s11d_${REF.toISOString().slice(0,10)}.csv`;a.click();
+}
+
+function clearF(){document.getElementById('inpSearch').value='';document.getElementById('inpDate').value='0';document.getElementById('inpSort').value='machine';TAB='all';document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===0));run()}
+
+
+// ── TEMA ──
+function toggleTheme(){
+  const isLight = document.body.classList.toggle('light');
+  const thumb = document.getElementById('ttThumb');
+  const lbl   = document.getElementById('ttLbl');
+  thumb.textContent = isLight ? '☀️' : '🌙';
+  lbl.textContent   = isLight ? 'Claro' : 'Escuro';
+  try { localStorage.setItem('kp_theme', isLight ? 'light' : 'dark'); } catch{}
+}
+// Restaurar preferência salva
+(function(){
+  const saved = localStorage.getItem('kp_theme');
+  if(saved === 'light'){
+    document.body.classList.add('light');
+    const thumb = document.getElementById('ttThumb');
+    const lbl   = document.getElementById('ttLbl');
+    if(thumb) thumb.textContent = '☀️';
+    if(lbl)   lbl.textContent   = 'Claro';
+  }
+})();
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
+run();
+</script>
+</body>
+</html>
