@@ -57,10 +57,10 @@ body{font-family:var(--ui);font-size:13px;background:var(--bg);color:var(--txt);
 .hdr{position:sticky;top:0;z-index:200;background:var(--hdr-bg);border-bottom:2px solid var(--yellow);padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between}
 .hdr-l{display:flex;align-items:center;gap:14px}
 .logo{background:var(--yellow);color:#000;font-weight:700;font-size:12px;letter-spacing:1.5px;padding:5px 10px;border-radius:2px}
-.hdr-title{font-size:14px;font-weight:600}
+.hdr-title{font-size:14px;font-weight:600;color:#F0F2F5}
 .hdr-title em{font-style:normal;color:var(--yellow)}
-.hdr-meta{font-size:11px;color:var(--txt3);text-align:right;line-height:1.7}
-.hdr-meta b{color:var(--txt2);font-weight:500}
+.hdr-meta{font-size:11px;color:#8A93A2;text-align:right;line-height:1.7}
+.hdr-meta b{color:#C8CDD5;font-weight:600}
 
 /* THEME TOGGLE */
 .tt{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;margin-left:18px}
@@ -68,7 +68,7 @@ body{font-family:var(--ui);font-size:13px;background:var(--bg);color:var(--txt);
 body.light .tt-track{background:#C8D0DB;border-color:#A8B2C0}
 .tt-thumb{position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:#FFD300;transition:transform .22s;font-size:8px;display:flex;align-items:center;justify-content:center}
 body.light .tt-thumb{transform:translateX(23px)}
-.tt-lbl{font-size:11px;font-weight:600;letter-spacing:.3px;color:#8A93A2;white-space:nowrap}
+.tt-lbl{font-size:11px;font-weight:600;letter-spacing:.3px;color:#9AA3B0;white-space:nowrap}
 body.light .tt-lbl{color:#7B8494}
 
 /* PAGE */
@@ -78,7 +78,7 @@ body.light .tt-lbl{color:#7B8494}
 .cards{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
 .card{background:var(--surf);border:1px solid var(--border);border-top:2px solid var(--borderl);border-radius:5px;padding:12px 14px;text-align:center}
 .card-num{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1}
-.card-lbl{margin-top:5px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);line-height:1.3}
+.card-lbl{margin-top:5px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--txt2);line-height:1.3}
 .c-y{border-top-color:var(--yellow)}
 .c-g{border-top-color:var(--ok)}
 .c-r{border-top-color:var(--bad)}.c-r .card-num{color:var(--bad)}
@@ -93,7 +93,7 @@ body.light .tt-lbl{color:#7B8494}
 
 /* TOOLBAR */
 .tb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;background:var(--surf);border:1px solid var(--border);border-radius:5px;margin-bottom:12px}
-.tb-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--txt3);white-space:nowrap}
+.tb-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--txt2);white-space:nowrap}
 .inp{background:var(--raised);border:1px solid var(--border);color:var(--txt);padding:6px 10px;border-radius:3px;font-size:12.5px;font-family:var(--ui);outline:none;transition:border-color .15s}
 .inp:focus{border-color:var(--yellow)}
 .inp::placeholder{color:var(--txt3)}
@@ -102,7 +102,7 @@ select.inp{cursor:pointer}
 .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:3px;border:1px solid transparent;font-family:var(--ui);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
 .btn:hover{opacity:.85}
 .btn-y{background:var(--yellow);color:#000;border-color:var(--yellow2)}
-.btn-g{background:transparent;color:var(--txt2);border-color:var(--borderl)}
+.btn-g{background:var(--raised);color:var(--txt);border-color:var(--borderl)}
 
 /* FILTER NOTE */
 .fnote{display:none;background:var(--info-bg);border:1px solid rgba(96,165,250,.2);border-radius:3px;padding:7px 12px;font-size:11.5px;color:var(--info);margin-bottom:10px}
@@ -119,14 +119,14 @@ select.inp{cursor:pointer}
 .tbl-wrap{background:var(--surf);border:1px solid var(--borderl);border-radius:0 5px 5px 5px;overflow:hidden}
 .tbl-bar{background:#0D1117;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .tbl-title{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--yellow)}
-.tbl-count{font-size:11px;color:var(--txt3);font-family:var(--mono)}
+.tbl-count{font-size:11px;color:#8A93A2;font-family:var(--mono)}
 .tbl-scroll{overflow-x:auto}
 
 /* TABLE */
 table{width:100%;border-collapse:collapse;min-width:960px}
-thead tr:first-child{background:#0D1117}
-thead tr:last-child{background:#131820}
-th{padding:8px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);border-bottom:1px solid var(--border);white-space:nowrap}
+thead tr:first-child{background:#0D1117}thead tr:first-child th{color:#9AA3B0!important}
+thead tr:last-child{background:#131820}thead tr:last-child th{color:#9AA3B0}
+th{padding:8px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#9AA3B0;border-bottom:1px solid var(--border);white-space:nowrap}
 th.tal{text-align:left;padding-left:14px}
 .thkp{color:#D97706;background:rgba(245,158,11,.06);border-bottom:1px solid rgba(245,158,11,.18)}
 .thae{color:#3B82F6;background:rgba(96,165,250,.06);border-bottom:1px solid rgba(96,165,250,.18)}
@@ -171,7 +171,7 @@ td.tal{text-align:left;padding-left:14px}
 .bok{background:rgba(34,197,94,.1);color:var(--ok);border:1px solid rgba(34,197,94,.18)}
 .bkp{background:rgba(239,68,68,.1);color:var(--bad);border:1px solid rgba(239,68,68,.2)}
 .bae{background:rgba(96,165,250,.1);color:var(--info);border:1px solid rgba(96,165,250,.18)}
-.bboth{background:rgba(239,68,68,.12);color:#FF8080;border:1px solid rgba(239,68,68,.25)}
+.bboth{background:rgba(239,68,68,.12);color:var(--bad);border:1px solid rgba(239,68,68,.25)}
 .bna{background:var(--raised);color:var(--txt3);border:1px solid var(--border)}
 .bdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 
@@ -187,9 +187,9 @@ td.tal{text-align:left;padding-left:14px}
 .bl-lbl.open{color:var(--bad)}
 
 /* Obs */
-.obs-inp{width:100%;background:var(--raised);border:1px solid transparent;color:var(--txt2);padding:4px 8px;border-radius:3px;font-size:11.5px;font-family:var(--ui);outline:none;transition:border-color .15s,color .15s}
+.obs-inp{width:100%;background:var(--raised);border:1px solid var(--border);color:var(--txt);padding:4px 8px;border-radius:3px;font-size:11.5px;font-family:var(--ui);outline:none;transition:border-color .15s,color .15s}
 .obs-inp::placeholder{color:var(--txt3);font-size:11px}
-.obs-inp:focus{border-color:var(--yellow);color:var(--txt);background:#1A1F27}
+.obs-inp:focus{border-color:var(--yellow);color:var(--txt);background:var(--raised)}
 
 /* Hist btn */
 .btn-hist{background:none;border:1px solid var(--borderl);color:var(--txt3);padding:4px 10px;border-radius:3px;font-size:11px;font-family:var(--ui);cursor:pointer;transition:all .15s}
@@ -200,16 +200,16 @@ td.tal{text-align:left;padding-left:14px}
 .ov.open{display:flex}
 .modal{background:var(--surf);border:1px solid var(--borderl);border-radius:8px;width:520px;max-width:96vw;box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden}
 .m-hdr{background:#0D1117;border-bottom:2px solid var(--yellow);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
-.m-hdr h3{font-size:14px;font-weight:600}
-.m-close{background:none;border:none;color:var(--txt3);font-size:22px;cursor:pointer;line-height:1;transition:color .15s}
-.m-close:hover{color:var(--txt)}
+.m-hdr h3{font-size:14px;font-weight:600;color:#F0F2F5}
+.m-close{background:none;border:none;color:#8A93A2;font-size:22px;cursor:pointer;line-height:1;transition:color .15s}
+.m-close:hover{color:#F0F2F5}
 .m-body{padding:20px}
 .fsec{border:1px solid var(--border);border-radius:5px;padding:12px 14px;margin-bottom:12px}
 .fsec-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
 .fst-b{color:var(--txt2)}.fst-k{color:var(--warn)}.fst-a{color:var(--info)}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fgrid1{grid-template-columns:1fr}
-.fg label{display:block;font-size:10.5px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fg label{display:block;font-size:10.5px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .fg .inp{width:100%}
 .m-alert{display:none;padding:8px 12px;border-radius:3px;font-size:12px;font-weight:600;margin-top:10px}
 .m-err{background:rgba(239,68,68,.1);color:var(--bad);border:1px solid rgba(239,68,68,.25)}
@@ -220,18 +220,18 @@ td.tal{text-align:left;padding-left:14px}
 .hp{position:fixed;right:0;top:0;bottom:0;width:360px;background:var(--surf);border-left:1px solid var(--borderl);box-shadow:-12px 0 40px rgba(0,0,0,.4);z-index:300;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease}
 .hp.open{transform:translateX(0)}
 .hp-hdr{background:#0D1117;border-bottom:2px solid var(--yellow);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.hp-hdr h3{font-size:13px;font-weight:600}
-.hp-close{background:none;border:none;color:var(--txt3);font-size:20px;cursor:pointer;transition:color .15s}
-.hp-close:hover{color:var(--txt)}
+.hp-hdr h3{font-size:13px;font-weight:600;color:#F0F2F5}
+.hp-close{background:none;border:none;color:#8A93A2;font-size:20px;cursor:pointer;transition:color .15s}
+.hp-close:hover{color:#F0F2F5}
 .hp-body{flex:1;overflow-y:auto;padding:14px}
 .he{background:var(--raised);border:1px solid var(--border);border-radius:5px;padding:12px;margin-bottom:10px}
 .he.lat{border-color:var(--yellow)}
 .he-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--yellow);margin-bottom:4px}
-.he-date{font-family:var(--mono);font-size:11px;color:var(--txt3);margin-bottom:8px}
+.he-date{font-family:var(--mono);font-size:11px;color:var(--txt2);margin-bottom:8px}
 .he-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .he-v{font-size:11.5px;color:var(--txt2)}
 .he-v span{font-family:var(--mono);font-weight:600}
-.he-obs{margin-top:8px;font-size:11px;color:var(--txt2);font-style:italic;border-top:1px solid var(--border);padding-top:6px}
+.he-obs{margin-top:8px;font-size:11.5px;color:var(--txt);font-style:italic;border-top:1px solid var(--border);padding-top:6px}
 
 /* EMPTY */
 .empty-row td{padding:40px 20px;color:var(--txt3);text-align:center;font-size:13px}
@@ -395,7 +395,7 @@ td.tal{text-align:left;padding-left:14px}
 <script>
 'use strict';
 const LKP=1.65,LAE=3.4,REF=new Date('2026-03-31T12:00:00');
-const MACHINES=['CA110','CA111','CA112','CA113','CA114','CA115','CA116','CA117','CA118','CA119','CA120','CA121','CA122','CA123','CA124','CA125','CA126','CA127','CA128','CA129','CA130','CA132','CA133','CA134','CA135','CA101','CA102','CA103','CA104'];
+const MACHINES=['CA110','CA111','CA112','CA113','CA114','CA115','CA116','CA117','CA118','CA119','CA120','CA121','CA122','CA123','CA124','CA125','CA126','CA127','CA128','CA129','CA130','CA131','CA132','CA133','CA134','CA135','CA101','CA102','CA103','CA104'];
 const BASE=[
   {d:71, kpDI:.4,kpDS:.0,kpEI:13.1,kpES:13.2,aeD:6.0,aeE:5.2},
   {d:110,kpDI:9.5,kpDS:.8,kpEI:1.6,kpES:.8,aeD:6.6,aeE:6.4},
@@ -422,7 +422,7 @@ const BASE=[
   {d:41, kpDI:1.0,kpDS:.4,kpEI:1.0,kpES:.7,aeD:5.7,aeE:5.3},
   {d:87, kpDI:.7,kpDS:.9,kpEI:1.0,kpES:.7,aeD:7.6,aeE:7.0},
   {d:60, kpDI:.1,kpDS:-.1,kpEI:.4,kpES:-.1,aeD:4.5,aeE:4.5},
-  {d:null},{d:null},{d:null},{d:null}
+  {d:null},{d:null},{d:null},{d:null},{d:null}
 ];
 
 function dAgo(iso){if(!iso)return null;return Math.round((REF-new Date(iso))/86400000)}
@@ -577,7 +577,10 @@ function openModal(){
   document.getElementById('mAlt').style.display='none';
   document.getElementById('ov').classList.add('open');
 }
-function closeModal(){document.getElementById('ov').classList.remove('open')}
+function closeModal(){
+  _editTarget=null;
+  document.querySelector('#ov .m-hdr h3').textContent='Registrar Nova Medição';
+  document.querySelector('#ov .btn-y').textContent='Salvar Medição';document.getElementById('ov').classList.remove('open')}
 
 function saveR(){
   const machine=document.getElementById('fM').value;
@@ -585,7 +588,18 @@ function saveR(){
   if(!date){showAlt('Informe a data da medição.','m-err');return}
   const pf=id=>{const v=parseFloat(document.getElementById(id).value);return isNaN(v)?null:v};
   const r={machine,date,kpDI:pf('fKpDI'),kpDS:pf('fKpDS'),kpEI:pf('fKpEI'),kpES:pf('fKpES'),aeD:pf('fAeD'),aeE:pf('fAeE'),obs:document.getElementById('fObs').value.trim()};
-  push(MACHINES.indexOf(machine),r);
+  const idx=MACHINES.indexOf(machine);
+  if(_editTarget){
+    // EDIÇÃO: substituir a medição existente
+    const h=hist(idx);
+    const target=h[_editTarget.histIdx];
+    const realIdx=RS[idx].indexOf(target);
+    if(realIdx>-1){ RS[idx][realIdx]=r; sv('kp3_rs',RS); }
+    _editTarget=null;
+  } else {
+    // NOVA medição
+    push(idx,r);
+  }
   const ws=[];
   if(excKP(r))ws.push('KP excedido (> 1,65 mm)');
   if(excAE(r))ws.push('AE excedido (> 3,4 mm)');
@@ -595,16 +609,36 @@ function saveR(){
 
 function showAlt(msg,cls){const el=document.getElementById('mAlt');el.className='m-alert '+cls;el.style.display='block';el.textContent=msg}
 
+// máquina atual no painel
+let _hpMachine='';
+
 function openHp(m){
-  const idx=MACHINES.indexOf(m);const h=hist(idx);
+  _hpMachine=m;
+  renderHp();
+  document.getElementById('hp').classList.add('open');
+}
+
+function renderHp(){
+  const m=_hpMachine;
+  const idx=MACHINES.indexOf(m);
+  const h=hist(idx);
   document.getElementById('hpTitle').textContent=`Histórico — ${m}`;
   const body=document.getElementById('hpBody');
-  if(!h.length){body.innerHTML='<p style="color:var(--txt3);font-size:12px;padding:8px">Sem histórico registrado.</p>';document.getElementById('hp').classList.add('open');return}
-  const vc=(v,l)=>v!=null&&Math.abs(v)>l?'var(--bad)':'var(--ok)';
+  if(!h.length){
+    body.innerHTML='<p style="color:var(--txt3);font-size:12px;padding:8px">Sem histórico registrado para esta máquina.</p>';
+    return;
+  }
+  const vc=(v,l)=>v!=null&&Math.abs(v)>l?'var(--bad)':' var(--ok)';
   body.innerHTML=h.map((r,i)=>`
-    <div class="he${i===0?' lat':''}">
-      ${i===0?'<div class="he-tag">Última medição</div>':''}
-      <div class="he-date">${fmt(r.date)} — ${dAgo(r.date)} dias atrás</div>
+    <div class="he${i===0?' lat':''}" style="position:relative">
+      ${i===0?'<div class="he-tag">Última medição</div>':''} 
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="he-date">${fmt(r.date)} — ${dAgo(r.date)} dias atrás</div>
+        <div style="display:flex;gap:5px">
+          <button onclick="editReading('${m}',${i})" style="background:none;border:1px solid var(--borderl);border-radius:3px;padding:2px 8px;font-size:10px;font-weight:600;color:var(--txt2);cursor:pointer;font-family:var(--ui)" title="Editar">✏ Editar</button>
+          <button onclick="deleteReading('${m}',${i})" style="background:none;border:1px solid var(--bad);border-radius:3px;padding:2px 8px;font-size:10px;font-weight:600;color:var(--bad);cursor:pointer;font-family:var(--ui)" title="Excluir esta medição">✕ Excluir</button>
+        </div>
+      </div>
       <div class="he-grid">
         <div class="he-v">KP Dir. Inf: <span style="color:${vc(r.kpDI,LKP)}">${r.kpDI?.toFixed(1)??'—'} mm</span></div>
         <div class="he-v">KP Dir. Sup: <span style="color:${vc(r.kpDS,LKP)}">${r.kpDS?.toFixed(1)??'—'} mm</span></div>
@@ -615,8 +649,47 @@ function openHp(m){
       </div>
       ${r.obs?`<div class="he-obs">${r.obs}</div>`:''}
     </div>`).join('');
-  document.getElementById('hp').classList.add('open');
 }
+
+function deleteReading(m, histIdx){
+  if(!confirm(`Excluir esta medição de ${m}? Esta ação não pode ser desfeita.`)) return;
+  const idx=MACHINES.indexOf(m);
+  const h=hist(idx); // ordenado por data desc
+  // encontrar o índice real no RS[idx]
+  const target=h[histIdx];
+  const realIdx=RS[idx].indexOf(target);
+  if(realIdx>-1){ RS[idx].splice(realIdx,1); sv('kp3_rs',RS); }
+  renderHp();
+  buildCards();
+  run();
+}
+
+function editReading(m, histIdx){
+  const idx=MACHINES.indexOf(m);
+  const h=hist(idx);
+  const r=h[histIdx];
+  if(!r) return;
+  // preencher o modal de nova medição com os dados existentes
+  document.getElementById('fM').value=m;
+  document.getElementById('fD').value=r.date||'';
+  document.getElementById('fKpDI').value=r.kpDI??''  ;
+  document.getElementById('fKpDS').value=r.kpDS??''  ;
+  document.getElementById('fKpEI').value=r.kpEI??''  ;
+  document.getElementById('fKpES').value=r.kpES??''  ;
+  document.getElementById('fAeD').value =r.aeD??''   ;
+  document.getElementById('fAeE').value =r.aeE??''   ;
+  document.getElementById('fObs').value =r.obs||''   ;
+  document.getElementById('mAlt').style.display='none';
+  // marcar que é edição
+  _editTarget={m, histIdx};
+  document.querySelector('#ov .m-hdr h3').textContent='Editar Medição';
+  document.querySelector('#ov .btn-y').textContent='Salvar Alterações';
+  document.getElementById('ov').classList.add('open');
+  closeHp();
+}
+
+let _editTarget=null;
+
 function closeHp(){document.getElementById('hp').classList.remove('open')}
 
 function exportCSV(){
